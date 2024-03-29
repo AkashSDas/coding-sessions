@@ -4,8 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "tsc --watch --preserveWatchOutput",
-        "dev:run": "pnpm tsc && node dist/index.js",
+        "start:tsc": "tsc --watch --preserveWatchOutput",
+        "start:dev": "pnpm tsc && node dist/index.js",
         "typecheck": "pnpm tsc -P . --noEmit"
     },
     "keywords": [],
@@ -13,5 +13,9 @@
     "license": "MIT",
     "devDependencies": {
         "typescript": "^5.4.3"
+    },
+    "engines": {
+        "node": "v20.11.0",
+        "pnpm": "8.14.3"
     }
 }
