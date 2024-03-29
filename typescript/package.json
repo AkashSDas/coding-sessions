@@ -1,0 +1,17 @@
+{
+    "name": "typescript",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "tsc --watch --preserveWatchOutput",
+        "dev:run": "pnpm tsc && node dist/index.js",
+        "typecheck": "pnpm tsc -P . --noEmit"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "typescript": "^5.4.3"
+    }
+}
