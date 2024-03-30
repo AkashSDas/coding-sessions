@@ -196,3 +196,6 @@ agent5[0] = "James Bond"; // error
 
 // Java has nominal type system
 // Typescript has structural type system because it has to fit in with Javascript
+
+// typeof works same for Typescript as its for Javascript
+// To have nominal type system we have to use instanceof
