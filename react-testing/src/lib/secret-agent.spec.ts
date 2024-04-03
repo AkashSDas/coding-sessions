@@ -27,19 +27,23 @@ describe("SecretAgent", () => {
             expect(fetchMock).toHaveBeenCalledWith(
                 "http://localhost:8000/api/secret-agent"
             );
-            fetchMock.mock.results[0].value.resolve({
-                async json() {
-                    return {
-                        msg: "The secret agent is James Bond",
-                        agentInfo: {
-                            name: "James Bond",
-                            age: 40,
-                            isSecret: true,
-                        },
-                    };
-                },
-            });
-            expect(await responsePromise).toMatchSnapshot();
+            // fetchMock.mock.results[0].value.resolve({
+            //     async json() {
+            //         return {
+            //             msg: "The secret agent is James Bond",
+            //             agentInfo: {
+            //                 name: "James Bond",
+            //                 age: 40,
+            //                 isSecret: true,
+            //             },
+            //         };
+            //     },
+            // });
+
+            // This simplifies our test since response doesn't matter here
+            fetchMock.mock.results[0].value.resolve(new Response('"RESPONSE"'));
+            expect(await responsePromise).toEqual("RESPONSE");
+            // expect(await responsePromise).toMatchSnapshot();
         });
     });
 });
