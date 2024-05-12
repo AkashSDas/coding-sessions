@@ -1,0 +1,11 @@
+{
+    "detail": [
+        {
+            "type": "enum",
+            "loc": ["path", "role"],
+            "msg": "Input should be 'admin', 'user' or 'guest'",
+            "input": "adminas",
+            "ctx": { "expected": "'admin', 'user' or 'guest'" }
+        }
+    ]
+}

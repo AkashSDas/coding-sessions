@@ -1,8 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Author, Book
+from .models import Author, Book, Tag
 import datetime
-from django.core.exceptions import ValidationError
 
 
 @api_view(["GET"])
@@ -64,13 +63,80 @@ def create_author(request):
 @api_view(["GET"])
 def get_books_of_author(request, author_id):
     author = Author.objects.get(pk=author_id)
-    books = Book.objects.filter(
-        author=author, is_banned=False, publication_date__lte=datetime.date.today()
-    ).order_by("-publication_date")[:2]
+    books = [
+        {
+            "title": book.title,
+            "publication_date": book.publication_date,
+            "page_count": book.page_count,
+            "price": book.price,
+            "is_banned": book.is_banned,
+            "summary": book.summary,
+        }
+        for book in author.books.all()
+    ]
+    return Response(
+        {"author": author.username, "books": books},
+        status=200,
+    )
+
+    # author = Author.objects.get(pk=author_id)
+    # books = Book.objects.filter(
+    #     author=author, is_banned=False, publication_date__lte=datetime.date.today()
+    # ).order_by("-publication_date")[:2]
+
+    # fetched_books = [
+    #     {
+    #         "title": book.title,
+    #         "publication_date": book.publication_date,
+    #         "page_count": book.page_count,
+    #         "price": book.price,
+    #         "is_banned": book.is_banned,
+    #         "summary": book.summary,
+    #     }
+    #     for book in books
+    # ]
+
+    # return Response(
+    #     {"author": author.username, "books": fetched_books},
+    #     status=200,
+    # )
+
+
+@api_view(["GET"])
+def get_tags_of_book(request, book_id: int):
+    try:
+        book = Book.objects.get(pk=book_id)
+        # tags = [tag.name for tag in book.tags.all()]
+        tags = Tag.objects.filter(books=book)
+        tags = [tag.name for tag in tags]
+        return Response({"book": book.title, "tags": tags}, status=200)
+    except Book.DoesNotExist:
+        return Response({"error": "Book not found"}, status=404)
+
+
+@api_view(["GET"])
+def get_tags(request):
+    tags = Tag.objects.prefetch_related("books").all()
+    tags = [
+        {
+            "name": tag.name,
+            "books": [book.title for book in tag.books.all()],
+        }
+        for tag in tags
+    ]
+    return Response({"tags": tags}, status=200)
+
+
+@api_view(["GET"])
+def get_books_v2(request):
+    # books = Book.objects.all()
+    books = Book.published_books_queryset.published_books()
+    # books = Book.published_books_queryset_v2.published_books()
 
     fetched_books = [
         {
             "title": book.title,
+            "author": book.author.username,
             "publication_date": book.publication_date,
             "page_count": book.page_count,
             "price": book.price,
@@ -80,7 +146,4 @@ def get_books_of_author(request, author_id):
         for book in books
     ]
 
-    return Response(
-        {"author": author.username, "books": fetched_books},
-        status=200,
-    )
+    return Response({"books": fetched_books}, status=200)

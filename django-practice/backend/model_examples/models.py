@@ -14,9 +14,24 @@ class Author(models.Model):
         return self.username
 
 
+class PublishedBookQueryset(models.QuerySet):
+    def published_books(self):
+        return self.filter(is_banned=False)
+
+
+class AuthorBookQueryset(models.QuerySet):
+    def get_books_of_author(self, author_id):
+        return self.filter(author_id=author_id)
+
+
+class PublishedBookManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_banned=False)
+
+
 class Book(models.Model):
     title = models.CharField(max_length=100)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="books")
     publication_date = models.DateField()
     page_count = models.PositiveIntegerField()
     price = models.DecimalField(
@@ -24,6 +39,11 @@ class Book(models.Model):
     )
     is_banned = models.BooleanField(default=False)
     summary = models.TextField()
+
+    objects = models.Manager()  # default manager
+    published_books = PublishedBookManager()  # custom manager
+    published_books_queryset = PublishedBookQueryset.as_manager()  # custom queryset
+    published_books_queryset_v2 = models.Manager.from_queryset(PublishedBookQueryset)()
 
     class Meta:
         ordering = ["-publication_date"]
@@ -50,3 +70,11 @@ class Book(models.Model):
     def mark_as_banned(self):
         self.is_banned = True
         self.save()
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    books = models.ManyToManyField(Book, related_name="tags")
+
+    def __str__(self):
+        return self.name
