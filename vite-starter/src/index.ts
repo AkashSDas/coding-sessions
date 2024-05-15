@@ -14,9 +14,9 @@ initializeCounter(rootElement?.ownerDocument);
 // ✓ built in 67ms
 
 // Dynamically import counter.ts
-import("./counter").then((module) => {
-    module.initializeCounter(rootElement?.ownerDocument);
-});
+// import("./counter").then((module) => {
+//     module.initializeCounter(rootElement?.ownerDocument);
+// });
 
 // Output for above import statement:
 // ✓ 5 modules transformed.

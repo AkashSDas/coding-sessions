@@ -15,6 +15,12 @@ export function initializeCounter(doc = globalThis.document): void {
 
     function increment(): void {
         count++;
+        if (count % 5 === 0) {
+            import("./alert").then((module) => {
+                module.addAlert(count);
+            });
+        }
+
         render();
     }
 
