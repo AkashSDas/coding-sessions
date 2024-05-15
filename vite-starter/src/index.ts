@@ -44,3 +44,7 @@ import styles from "./alert.css?url";
 console.log(styles);
 
 import "./environment";
+
+import "./user";
+
+import "./api-response";
