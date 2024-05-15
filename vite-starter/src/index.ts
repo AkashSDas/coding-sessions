@@ -42,3 +42,5 @@ if (img) {
 // @ts-ignore
 import styles from "./alert.css?url";
 console.log(styles);
+
+import "./environment";
