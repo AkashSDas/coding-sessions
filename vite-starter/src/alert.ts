@@ -1,6 +1,7 @@
 export function addAlert(counter: number) {
     const alert = document.createElement("div");
     alert.textContent = `Counter is at ${counter}`;
+    alert.id = "alert";
     document.body.appendChild(alert);
 }
 

@@ -1,7 +1,16 @@
+import styles from "./counter.module.css";
+import "./heading.scss";
+
+console.log({ styles });
+
 export function initializeCounter(doc = globalThis.document): void {
     const countElement = doc.getElementById("count");
     const incrementButton = doc.getElementById("increment");
     const decrementButton = doc.getElementById("decrement");
+
+    if (countElement) {
+        countElement.classList.add(styles.count);
+    }
 
     let count = 0;
     incrementButton?.addEventListener("click", increment);

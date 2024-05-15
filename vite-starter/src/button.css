@@ -1,0 +1,16 @@
+button {
+    background-color: antiquewhite;
+    cursor: pointer;
+    height: 44px;
+    padding-inline: 16px;
+    border: none;
+    border-radius: 8px;
+
+    &:hover {
+        background-color: aqua;
+    }
+
+    &:active {
+        background-color: aquamarine;
+    }
+}
