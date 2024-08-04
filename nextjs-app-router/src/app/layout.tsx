@@ -14,7 +14,13 @@ export default function RootLayout(
 ) {
     return (
         <html lang="en">
-            <body className={inter.className}>{props.children}</body>
+            <body className={`${inter.className} p-4`}>
+                <h4 className="font-bold mb-4">Root Layout</h4>
+
+                <div className="border-2 border-black rounded">
+                    {props.children}
+                </div>
+            </body>
         </html>
     );
 }
