@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "declaration": true,
+        "strict": true,
+        "module": "es2022",
+        "moduleResolution": "node",
+        "target": "es2017",
+        "esModuleInterop": true,
+        "useUnknownInCatchVariables": true,
+        "rootDir": "src"
+    },
+    "include": ["src/**/*", "src/tests"],
+    "exclude": ["node_modules", "dist"]
+}
