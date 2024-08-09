@@ -6,7 +6,8 @@ import {
     getAllNotes,
     removeAll,
     removeNote,
-} from "./notes";
+} from "./notes.js";
+import { start } from "./server.js";
 
 // Angle brackets in command means that argument is required
 // Square brackets in command means that argument is optional
@@ -101,7 +102,11 @@ yargs(hideBin(process.argv))
                 description: "Port to bind on",
             });
         },
-        async function (argv) {}
+        async function (argv) {
+            const notes = await getAllNotes();
+            // argv.port is optional
+            start({ notes });
+        }
     )
     .command(
         "clean",

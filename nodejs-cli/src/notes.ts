@@ -1,4 +1,4 @@
-import * as db from "./db";
+import * as db from "./db.js";
 
 export async function newNote(content: string, tags: string[]) {
     const id = await db.insertDB({ content, tags });

@@ -7,6 +7,7 @@
     "scripts": {
         "start:tsc": "tsc --watch --preserveWatchOutput",
         "start:dev": "pnpm tsc && node dist/index.js",
+        "start:server": "pnpm tsc && node dist/server.js",
         "typecheck": "pnpm tsc -P . --noEmit",
         "test": "jest -- src",
         "test:coverage": "jest -- src --coverage"
@@ -30,6 +31,7 @@
         "pnpm": "8.14.3"
     },
     "dependencies": {
+        "open": "^10.1.0",
         "yargs": "^17.7.2"
     }
 }
